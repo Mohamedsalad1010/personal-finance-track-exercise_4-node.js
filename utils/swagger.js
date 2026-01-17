@@ -14,7 +14,7 @@ const options = {
     },
     servers: [
       {
-        url: 'http://localhost:4000'
+        url:  process.env.NODE_DEV == "development" ? 'http://localhost:4000' : "https://personal-finance-track-exercise-4-node-js.onrender.com"
       }
     ],
     components: {
