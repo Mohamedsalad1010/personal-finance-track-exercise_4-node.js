@@ -3,7 +3,7 @@ import dotenv from 'dotenv'
 import mongoose from 'mongoose'
 import helmet from 'helmet'
 import morgan from 'morgan'
-
+import cors from 'cors'
 import { errorHandller } from './middlewares/errorHandling.js'
 import { notFound } from './middlewares/notFound.js'
 
@@ -22,12 +22,16 @@ app.use(express.json())
 app.use(helmet())
 app.use(limiter)
 // uses swagger
-
+app.use(cors(
+    {
+        origin: ['http://localhost:5174' , 'http://localhost:5173']
+    }
+))
 app.use('/docs', swaggerUi.serve , swaggerUi.setup(swaggerSpec))
 // uses routes 
-app.use('/users' , userRoutes)
-app.use('/transactions' , TransactionsRoute)
-app.use('/uploads', uploadRoute)
+app.use('/api/users' , userRoutes)
+app.use('/api/transactions' , TransactionsRoute)
+app.use('/api/uploads', uploadRoute)
 
 // use errors handles
 // not found error handle

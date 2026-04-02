@@ -79,7 +79,7 @@ router.post('/', valitorUserSchemas(createuserSchemas), registerUser)
  *       201:
  *         description: logged user created
  */
-router.post('/login' , protectRoute ,  logInUser)
+router.post('/login' ,   logInUser)
 
 
 /**
@@ -143,15 +143,9 @@ router.delete('/:id' , protectRoute ,  deleteUser)
 
 // profile sample
 
-router.get("/profile", protectRoute  , (req , res) => {
+router.get("/me", protectRoute  , (req , res) => {
     const user = req.user
-    res.json({
-        userInfo: {
-            name: user.name,
-            email: user.email,
-            role: user.role
-        }
-    })
+    res.json( user)
 })
 
 
