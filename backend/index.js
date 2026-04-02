@@ -19,12 +19,15 @@ const PORT = process.env.PORT
 const app = express()
 app.use(express.json())
 
+import path from "path";
+import { fileURLToPath } from "url";
+
 app.use(helmet())
 app.use(limiter)
 // uses swagger
 app.use(cors(
     {
-        origin: ['http://localhost:5174' , 'http://localhost:5173']
+        origin: ['http://localhost:5174' ]
     }
 ))
 app.use('/docs', swaggerUi.serve , swaggerUi.setup(swaggerSpec))
@@ -33,6 +36,15 @@ app.use('/api/users' , userRoutes)
 app.use('/api/transactions' , TransactionsRoute)
 app.use('/api/uploads', uploadRoute)
 
+
+
+if(process.env.NODE_DEV === 'production'){
+    const __dirname= path._dirname(fileURLToPath(import.meta.url))
+    app.use(express.static(path.join(__dirname , '../frontend/dist')))
+    app.get(/.*/ , (req , res)=>{
+        res.send(path.join(__dirname , '..' , 'frontend', 'dist' , 'index.html'))
+    })
+}
 // use errors handles
 // not found error handle
 app.use(notFound)
