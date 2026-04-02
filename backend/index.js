@@ -39,10 +39,10 @@ app.use('/api/uploads', uploadRoute)
 
 
 if(process.env.NODE_DEV === 'production'){
-    const __dirname= path._dirname(fileURLToPath(import.meta.url))
+    const __dirname= path.dirname(fileURLToPath(import.meta.url))
     app.use(express.static(path.join(__dirname , '../frontend/dist')))
     app.get(/.*/ , (req , res)=>{
-        res.send(path.join(__dirname , '..' , 'frontend', 'dist' , 'index.html'))
+        res.send(path.join(__dirname , '..' , 'frontend', 'dist' , 'index'))
     })
 }
 // use errors handles
