@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Navigate, Route, Routes } from 'react-router'
-import LoginPage from './pages/loginPage'
+import LoginPage from './pages/LoginPage'
 import SignUpPage from './pages/signUpPage'
 import Dashboard from './pages/Dashboard/Dashboard'
 import ProtectRout from './components/Auth/ProtectedRoute'
