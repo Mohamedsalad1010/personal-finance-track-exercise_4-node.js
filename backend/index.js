@@ -27,7 +27,7 @@ app.use(limiter)
 // uses swagger
 app.use(cors(
     {
-        origin: ['http://localhost:5174' ]
+        origin: ['http://localhost:5174' , 'https://personal-finance-track-exercise-4-node-js.onrender.com' ]
     }
 ))
 app.use('/docs', swaggerUi.serve , swaggerUi.setup(swaggerSpec))
