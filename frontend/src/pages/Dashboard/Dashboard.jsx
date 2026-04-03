@@ -27,7 +27,7 @@ const Dashboard = () => {
         const response = await api.get("/transactions");
       return response.data;
       } catch (error) {
-        if(error.response.status === 404){
+        if(error.response?.status === 404){
     return  []
         }
       }
@@ -69,8 +69,8 @@ const Dashboard = () => {
         {/* transaction list and stats */}
 
         <TransactionLists
-        transactions={transaction.data || []}
-        isLoading={transaction.isLoading}
+        transactions={transaction || []}
+        isLoading={isLoading}
         onEdit={handleEditTasks}
         />
       </main>
@@ -80,7 +80,7 @@ const Dashboard = () => {
         task={isEditTask}
         open={showTaskForm || !!isEditTask}
         onOpenChange={handleFormClose}
-        transactions={transaction.data || []}
+        transactions={transaction || []}
       />
     </div>
   );
