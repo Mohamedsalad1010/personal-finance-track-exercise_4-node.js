@@ -20,24 +20,32 @@ const Dashboard = () => {
     setIsEditTask(null)
   };
 
-  const transactionQuery = useQuery({
+  const {data: transaction=[] , isLoading, error} = useQuery({
     queryKey: ["transaction"],
     queryFn: async () => {
-      const response = await api.get("/transactions");
+      try {
+        const response = await api.get("/transactions");
       return response.data;
+      } catch (error) {
+        if(error.response.status === 404){
+    return  []
+        }
+      }
     },
+
+
     retry: 1,
   });
 
-  if (transactionQuery.isError) {
+  if (error) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <p className="text-primary"> Error Tasks: {transactionQuery.error.message}</p>
+        <p className="text-primary"> Error Tasks: {error.message}</p>
       </div>
     );
   }
 
-  if (transactionQuery.isLoading) {
+  if (isLoading) {
     <div className="min-h-screen flex items-center justify-center">
       <Loader className="animate-spin text-primary" />
     </div>;
@@ -61,8 +69,8 @@ const Dashboard = () => {
         {/* transaction list and stats */}
 
         <TransactionLists
-        transactions={transactionQuery.data || []}
-        isLoading={transactionQuery.isLoading}
+        transactions={transaction.data || []}
+        isLoading={transaction.isLoading}
         onEdit={handleEditTasks}
         />
       </main>
@@ -72,7 +80,7 @@ const Dashboard = () => {
         task={isEditTask}
         open={showTaskForm || !!isEditTask}
         onOpenChange={handleFormClose}
-        transactions={transactionQuery.data || []}
+        transactions={transaction.data || []}
       />
     </div>
   );
