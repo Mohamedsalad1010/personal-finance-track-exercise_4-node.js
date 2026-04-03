@@ -1,6 +1,6 @@
 import axios from "axios";
 import useAuthStore from "../store/AuthStore";
- const API_URL = 'http://localhost:4000/api'
+ const API_URL = 'https://personal-finance-track-exercise-4-node-js.onrender.com/api'
 const api = axios.create({
     baseURL: API_URL,
     headers:{
