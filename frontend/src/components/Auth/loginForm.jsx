@@ -50,14 +50,14 @@ const LoginForm = () => {
           const token = data.token
           const user = data.user
          setAuth(user , token)
-         Navigate('/dashboard')
-          console.log("Saving user + token"); // ✅ DEBUG
+         Navigate('/dashboard', replace)
+         
       }
-      console.log("data", data.user);
+   
     },
     onError: (error) => {
       console.log("errors", error);
-      setError(ErrorUtils(error) || 'invalid email or password ');
+      setError(ErrorUtils(error) );
     },
   });
 

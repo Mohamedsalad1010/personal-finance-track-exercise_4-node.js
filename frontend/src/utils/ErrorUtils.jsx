@@ -1,37 +1,39 @@
 const ErrorUtils = (error) => {
-    if(!error) return null
+  if (!error) return null;
 
-
-    if(error.response?.data){
-  const data = error.response.data
-//  zod error
-  if(data?.errors && Array.isArray(data.errors)){
-    return  data.errors.map(err => err.message)[1]
+  // Network error
+  if (error.request && !error.response) {
+    return "Network error occurred. Please check your connection.";
   }
-    // singlie error
-    if(data){
-        return data
-    }
-     
 
-    // field err
-    if(data.error){
-        return data.error
-    }
+  //  Server response exists
+  if (error.response?.data) {
+    const data = error.response.data;
 
-    // networ error
-
-    if(error.request && !error.response){
-        return 'network error accured please check your network.'
+    //  Zod validation errors
+    if (Array.isArray(data.errors)) {
+      return data.errors.map((err) => err.message).join(", ");
     }
 
-    // general errror
-
-    if(error.message){
-        return error.message
+    //   API patterns
+    if (data.message) {
+      return data.message;
     }
-    }
-    return  'somthing want  wrong try again'
-}
 
-export default ErrorUtils
+    if (data.error) {
+      return data.error;
+    }
+
+    // ✅ fallback (stringify object safely)
+    return JSON.stringify(data);
+  }
+
+  // ✅ General JS error
+  if (error.message) {
+    return error.message;
+  }
+
+  return "Something went wrong. Try again.";
+};
+
+export default ErrorUtils;

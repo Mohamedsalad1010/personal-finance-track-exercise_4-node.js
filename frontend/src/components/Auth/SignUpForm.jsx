@@ -42,7 +42,7 @@ const SignUpForm = () => {
         },
         onSuccess: (data) =>{
            if(data){
-            Navigate('/login')
+            Navigate('/login' , replace)
            }
             setError(null)
                 setFormValues({

@@ -33,7 +33,7 @@ export const logInUser = async (req, res, next) => {
     const user = await User.findOne({ email });
     console.log("user", user);
     if (!user || !(await user.comparePassword(password))) {
-      return res.status(401).json("invalid email or password");
+      return res.status(401).json({message: "invalid email or password"});
     }
 
     const token = geneWebToken(user._id);
